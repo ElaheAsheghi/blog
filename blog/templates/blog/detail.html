@@ -1,0 +1,74 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %}Post detail {% endblock %}
+{% load jformat %}
+{% load blog_tags %}
+{% block content %}
+<h1>"{{ post.title }}" </h1>
+
+
+    <div class="detail_images">
+        {% for img in post.images.all %}
+                
+                <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
+                <!-- <p> {{ img }}</p> -->
+                
+            {% endfor %}
+    </div>
+
+
+<h4>
+    by <a href="{% url 'blog:author' post.id %}">{{ post.author }}</a>
+    <img src="{{ post.author.account.photo.url }}" alt="avatar" style="height: 70px;
+    width: 70px; border-radius: 100%;">
+</h4>
+<h5>
+    زمان مطالعه:
+    {{post.reading_time}} دقیقه
+</h5>
+<hr>
+<h4>
+    متن پست
+</h4>
+
+    {{ post.description | markdown | sansor | linebreaks }}
+
+<br>
+
+<br>
+<p>
+    {{post.publish|jformat:"%Y/%m/%d - %H:%M %a"}}
+</p>
+<p>
+    دسته بندی:
+    {{ post.category }}
+</p>
+<hr>
+
+
+<div>
+    {% with comments.count as cm_count %}
+    {{ cm_count }} Comment{{ cm_count | pluralize }}
+</div>
+
+<br>
+<div>
+    {% for cm in comments %}
+        <img src="{% static 'images/avatar/avatar-login.jpg' %}" alt="avatar" style="height: 50px;
+        width: 50px; border-radius: 100%;">
+        {{cm.name}}
+        {{cm.body|linebreaks}}
+        <br>
+        
+    {% empty %}
+    کامنتی وجود ندارد!
+    
+    {% endfor %}
+</div>
+{% endwith %}
+<form action="{% url 'blog:post_comment' post.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="افزودن کامنت">
+</form>
+{% endblock %}

@@ -1,0 +1,8 @@
+<div>
+    <h2>کمترین زمان مطالعه</h2>
+    {% for post in min_post %}
+        <a href="{{post.get_absolute_url}}">
+            {{post.title}}
+        </a>
+    {% endfor %}
+</div>

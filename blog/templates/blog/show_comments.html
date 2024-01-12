@@ -1,0 +1,15 @@
+{% extends 'parent/base.html' %}
+{% block title %}show comments{% endblock %}
+
+{% block content %}
+    <h1>
+        کامنت های پست {{ post }}
+    </h1>
+    {% for cm in comments.all %}
+        <h4>{{ cm.name }}</h4>
+        <p>{{ cm.body }}</p>
+        <br>
+        {{ cm.updated | default:cm.created }}
+        <hr>
+    {% endfor %}
+{% endblock %}
