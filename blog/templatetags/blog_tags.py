@@ -17,6 +17,7 @@ def total_posts():
 def total_comments():
     return Comment.objects.filter(active=True).count()
 
+
 @register.inclusion_tag("partials/latest_posts.html")
 def latest_posts(count=4):
     l_posts = Post.Published.order_by('-publish')[:count]

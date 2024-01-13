@@ -4,18 +4,21 @@
 {% load jformat %}
 {% load blog_tags %}
 {% block content %}
-<h1>"{{ post.title }}" </h1>
 
 
-    <div class="detail_images">
-        {% for img in post.images.all %}
-                
-                <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
-                <!-- <p> {{ img }}</p> -->
-                
-            {% endfor %}
+<div class="container-sm">
+    
+    <div class="container text-center">
+        <h1>"{{ post.title }}" </h1>
     </div>
-
+    <div class="container-sm">
+        <div class="detail_images">
+            {% for img in post.images.all %}
+                <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 <h4>
     by <a href="{% url 'blog:author' post.id %}">{{ post.author }}</a>
@@ -54,7 +57,7 @@
 <br>
 <div>
     {% for cm in comments %}
-        <img src="{% static 'images/avatar/avatar-login.jpg' %}" alt="avatar" style="height: 50px;
+        <img src="{% static 'images/avatar/avatar-login.png' %}" alt="avatar" style="height: 50px;
         width: 50px; border-radius: 100%;">
         {{cm.name}}
         {{cm.body|linebreaks}}

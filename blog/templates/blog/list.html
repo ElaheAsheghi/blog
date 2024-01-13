@@ -1,57 +1,63 @@
 {% extends 'parent/base.html' %}
 {% block title %}Post List{% endblock %}
 {% block content %}
-    <h1>Post List</h1>
+    <div class="row">
+        <div class="col-8">
+            <div class="container-sm">
+                <div class="container text-center">
+                    <div>
+                        {% if category %}
+                            <h2>
+                             لیست پست های دسته بندی {{ category }}
+                            </h2>
+                    
+                        {% else %}
+                            <h2>
+                                لیست همه پست ها
+                            </h2>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="list-group">
+                    {% for post in posts %}
+                        <a href="{{post.get_absolute_url}}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{post.title}}</h5>
+                            <small class="text-body-secondary">{{post.created}}</small>
+                        </div>
+                        <img class="rounded mx-auto d-block" src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
+                        <p class="mb-1"></p>
+                        <small class="text-body-secondary">{{post.description|truncatewords:4}}.</small>
+                        </a>
+                    {% endfor %}
+                  </div>
+                  {% include "partials/pagination.html" with page=posts %}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="container-sm">
+                <div class="list-group">
+                    <div class="container text-center">
+                        <h2>
+                            دسته بندی پست ها
+                        </h2>
+                        <a href="{% url 'blog:post_list_category' 'سایر' %}" class="list-group-item list-group-item-action">همه پست ها</a>
+                      
+                        <a href="{% url 'blog:post_list_category' 'تکنولوژی' %}" class="list-group-item list-group-item-action list-group-item-primary">تکنولوژی</a>
+                        <a href="{% url 'blog:post_list_category' 'علمی' %}" class="list-group-item list-group-item-action list-group-item-secondary">علمی</a>
+                        <a href="{% url 'blog:post_list_category' 'سایر' %}" class="list-group-item list-group-item-action list-group-item-success">سایر</a>
+                        <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-danger">A simple light list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-warning">A simple warning list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-info">A simple info list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light">A simple light list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-dark">A simple dark list group item</a> -->
+                    </div>
+                    
+                  </div>
+        </div>
+      </div>
+    </div>
 
-    {% if category %}
-        <h1>
-            <a href="{% url 'blog:post_list' %}">
-                لیست پست های {{ category }}
-            </a>
-        </h1>
-    {% else %}
-        <h1>
-            <a href="{% url 'blog:post_list' %}">
-                لیست همه پست ها
-            </a>
-        </h1>
-    {% endif %}
-
-    <ol style="--length: {{posts.count}}" role="list">
-    {% for post in posts %}
-    <li style="--i: {{forloop.counter}}">
-    <h3>
-        <a href="{{post.get_absolute_url}}">
-            {{post.title}}
-        </a>
-    </h3>
-    <p>
-        {{post.description|truncatewords:4}}
-    </p>
     
-    <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
-  
-    </li>
-    {% endfor %}
-    </ol>
-
-<!-- category items -->
-    <h1>
-        دسته بندی پست ها
-    </h1>
-    <ul>
-        <li>
-            <a href="{% url 'blog:post_list_category' 'تکنولوژی' %}">تکنولوژی</a>
-        </li>
-        <li>
-            <a href="{% url 'blog:post_list_category' 'علمی' %}">علمی</a>
-        </li>
-        <li>
-            <a href="{% url 'blog:post_list_category' 'سایر' %}">سایر</a>
-        </li>
-        
-
-    </ul>
-
-    {% include "partials/pagination.html" with page=posts %}
 {% endblock %}
