@@ -102,22 +102,6 @@ def post_comment(request, post_id):
     return render(request, "forms/comment.html", context)
     
 
-    
-# def post(request):
-#     if request.method == "POST":
-#         form = PostForm(data=request.POST)
-#         if form.is_valid():
-#             post = form.save()
-            
-#             return redirect("blog:index")
-#     else:
-#             form = PostForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, "forms/post.html", context)
-
-
 def post_search(request):
     query = None
     results = []

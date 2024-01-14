@@ -7,17 +7,11 @@
 
 
 <div class="container-sm">
+    <h1>"{{ post.title }}" </h1>
     
-    <div class="container text-center">
-        <h1>"{{ post.title }}" </h1>
-    </div>
-    <div class="container-sm">
-        <div class="detail_images">
-            {% for img in post.images.all %}
-                <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
-            {% endfor %}
-        </div>
-    </div>
+    {% for img in post.images.all %}
+        <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
+    {% endfor %}
 </div>
 
 <h4>
